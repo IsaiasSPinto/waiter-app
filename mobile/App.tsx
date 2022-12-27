@@ -1,13 +1,16 @@
 import { useFonts } from 'expo-font';
+import { Main } from './src/Main';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'intl';
+import 'intl/locale-data/jsonp/pt-BR';
+
 
 export default function App() {
 
 	const [isFontsLoaded] = useFonts({
 		'GeneralSans-400': require('./assets/fonts/GeneralSans-Regular.otf'),
-		'GeneralSans-500': require('./assets/fonts/GeneralSans-Semibold.otf'),
-		'GeneralSans-600': require('./assets/fonts/GeneralSans-Bold.otf'),
+		'GeneralSans-600': require('./assets/fonts/GeneralSans-Semibold.otf'),
+		'GeneralSans-700': require('./assets/fonts/GeneralSans-Bold.otf'),
 	});
 
 	if (!isFontsLoaded) {
@@ -15,18 +18,11 @@ export default function App() {
 	}
 
 	return (
-		<View style={styles.container}>
-			<Text style={{ fontFamily: 'GeneralSans-400' }}>ester feia!</Text>
-			<StatusBar style="auto" />
-		</View>
+		<>
+			<StatusBar style="dark" />
+			<Main></Main>
+		</>
 	);
 }
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: 'red',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-});
+
