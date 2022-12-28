@@ -18,7 +18,7 @@ export function Main() {
 	return (
 		<>
 			<Container>
-				<Header></Header>
+				<Header onCancel={() => setSelectedTable('')} table={selectedTable}></Header>
 
 				<CategoriesConteiner>
 					<Categories></Categories>
