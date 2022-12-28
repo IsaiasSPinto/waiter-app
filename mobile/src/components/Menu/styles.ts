@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-export const Product = styled.TouchableOpacity`
+export const ProductContainer = styled.TouchableOpacity`
 	flex-direction: row;
 	align-items: center;
 `;
@@ -8,8 +8,6 @@ export const Product = styled.TouchableOpacity`
 export const ProductDetails = styled.View`
 	margin-left: 16px;
 	flex: 1;
-
-
 `;
 
 export const ProductImage = styled.Image`

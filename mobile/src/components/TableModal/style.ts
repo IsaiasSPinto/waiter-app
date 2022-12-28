@@ -13,7 +13,6 @@ export const ModalBody = styled.View`
 	border-radius: 8px;
 	padding: 24px;
 	width: 100%;
-
 `;
 
 export const ModalHeader = styled.View`
@@ -24,7 +23,6 @@ export const ModalHeader = styled.View`
 
 export const ModalForm = styled.View`
 	margin-top: 32px;
-
 `;
 
 export const Input = styled.TextInput`

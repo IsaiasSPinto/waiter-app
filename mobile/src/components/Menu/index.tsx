@@ -1,35 +1,54 @@
+import { useState } from 'react';
 import { FlatList } from 'react-native';
 import { products } from '../../mocks/products';
+import { Product } from '../../types/Product';
 import { formatCurency } from '../../utils/formatCurency';
 import { PlusCircle } from '../Icons/PlusCircle';
+import { ProductModal } from '../ProductModal';
 import { Text } from '../Text';
-import { Product, ProductDetails, ProductImage, Separator, AddToCartButton } from './styles';
+import { ProductContainer, ProductDetails, ProductImage, Separator, AddToCartButton } from './styles';
 
 export function Menu() {
+	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [selectedProduct, setSelectedProduct] = useState<null | Product>(null);
+
+	function handleSelectProduct(product: Product) {
+		setSelectedProduct(product);
+		setIsModalVisible(true);
+	}
+
 	return (
-		<FlatList
-			data={products}
-			keyExtractor={(item) => item._id}
-			style={{ marginTop: 32 }}
-			contentContainerStyle={{ paddingHorizontal: 24 }}
-			ItemSeparatorComponent={() => <Separator />}
-			renderItem={({ item: product }) => (
-				<Product>
-					<ProductImage source={{
-						uri: `http://192.168.1.5:3001/uploads/${product.imagePath}`,
-					}} />
-					<ProductDetails>
-						<Text weight='600'>{product.name}</Text>
-						<Text style={{ marginVertical: 8 }} color='#666' size={14}>{product.description}</Text>
-						<Text size={14} color='#333' weight='600'>{formatCurency(product.price)}</Text>
-					</ProductDetails>
+		<>
+			<ProductModal
+				visible={isModalVisible}
+				onClose={() => setIsModalVisible(false)}
+				product={selectedProduct}
+			/>
 
-					<AddToCartButton>
-						<PlusCircle />
-					</AddToCartButton>
+			<FlatList
+				data={products}
+				keyExtractor={(item) => item._id}
+				style={{ marginTop: 32 }}
+				contentContainerStyle={{ paddingHorizontal: 24 }}
+				ItemSeparatorComponent={() => <Separator />}
+				renderItem={({ item: product }) => (
+					<ProductContainer onPress={() => handleSelectProduct(product)}>
+						<ProductImage source={{
+							uri: `http://192.168.1.5:3001/uploads/${product.imagePath}`,
+						}} />
+						<ProductDetails>
+							<Text weight='600'>{product.name}</Text>
+							<Text style={{ marginVertical: 8 }} color='#666' size={14}>{product.description}</Text>
+							<Text size={14} color='#333' weight='600'>{formatCurency(product.price)}</Text>
+						</ProductDetails>
 
-				</Product>
-			)}
-		/>
+						<AddToCartButton>
+							<PlusCircle />
+						</AddToCartButton>
+
+					</ProductContainer>
+				)}
+			/>
+		</>
 	);
 }
