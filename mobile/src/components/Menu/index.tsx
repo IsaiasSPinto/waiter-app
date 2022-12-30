@@ -8,7 +8,12 @@ import { ProductModal } from '../ProductModal';
 import { Text } from '../Text';
 import { ProductContainer, ProductDetails, ProductImage, Separator, AddToCartButton } from './styles';
 
-export function Menu() {
+interface MenuProps {
+	onSelectProduct: (product: Product) => void;
+}
+
+
+export function Menu({ onSelectProduct }: MenuProps) {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState<null | Product>(null);
 
@@ -23,10 +28,12 @@ export function Menu() {
 				visible={isModalVisible}
 				onClose={() => setIsModalVisible(false)}
 				product={selectedProduct}
+				onSelectProduct={onSelectProduct}
 			/>
 
 			<FlatList
 				data={products}
+				showsVerticalScrollIndicator={false}
 				keyExtractor={(item) => item._id}
 				style={{ marginTop: 32 }}
 				contentContainerStyle={{ paddingHorizontal: 24 }}
@@ -42,7 +49,7 @@ export function Menu() {
 							<Text size={14} color='#333' weight='600'>{formatCurency(product.price)}</Text>
 						</ProductDetails>
 
-						<AddToCartButton>
+						<AddToCartButton onPress={() => onSelectProduct(product)}>
 							<PlusCircle />
 						</AddToCartButton>
 

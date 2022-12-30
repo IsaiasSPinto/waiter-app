@@ -8,7 +8,6 @@ interface HeaderProps {
 }
 
 export function Header({ table, onCancel }: HeaderProps) {
-
 	return (
 		<Container>
 			{!table && (

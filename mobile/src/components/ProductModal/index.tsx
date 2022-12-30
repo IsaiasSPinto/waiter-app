@@ -22,11 +22,17 @@ interface ProductModalProps {
 	visible: boolean;
 	onClose: () => void;
 	product: Product | null;
+	onSelectProduct: (product: Product) => void;
 }
 
-export function ProductModal({ visible, onClose, product }: ProductModalProps) {
+export function ProductModal({ visible, onClose, product, onSelectProduct }: ProductModalProps) {
 	if (!product) {
 		return null;
+	}
+
+	function OnAddProduct(product: Product) {
+		onSelectProduct(product);
+		onClose();
 	}
 
 	return (
@@ -82,7 +88,7 @@ export function ProductModal({ visible, onClose, product }: ProductModalProps) {
 						<Text size={20} weight="600">{formatCurency(product.price)}</Text>
 					</PriceContainer>
 
-					<Button onPress={() => alert('asd')}>
+					<Button onPress={() => OnAddProduct(product)}>
 						Adicionar ao pedido
 					</Button>
 
