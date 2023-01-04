@@ -10,10 +10,11 @@ import { ProductContainer, ProductDetails, ProductImage, Separator, AddToCartBut
 
 interface MenuProps {
 	onSelectProduct: (product: Product) => void;
+	products: Product[];
 }
 
 
-export function Menu({ onSelectProduct }: MenuProps) {
+export function Menu({ onSelectProduct, products }: MenuProps) {
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState<null | Product>(null);
 
