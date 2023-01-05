@@ -124,6 +124,11 @@ export const Actions = styled.footer`
 	flex-direction: column;
 	margin-top: 2rem;
 
+	buttons:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
 	.primary {
 		background: #333333;
 		color: #fff;
@@ -132,6 +137,7 @@ export const Actions = styled.footer`
 		padding: 0.75rem 1.5rem;
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		gap: 0.5rem;
 	}
 

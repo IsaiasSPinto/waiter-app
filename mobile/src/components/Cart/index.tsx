@@ -18,22 +18,38 @@ import {
 	TotalContainer,
 } from "./styles";
 import { useState } from "react";
+import { api } from "../../utils/api";
 
 interface CartProps {
 	cartItems: CartItem[];
 	onAdd: (product: Product) => void;
 	onDecrement: (product: Product) => void;
 	onConfirmOrder: () => void;
+	selectedTable: string;
 }
 
-export function Cart({ cartItems, onAdd, onDecrement, onConfirmOrder }: CartProps) {
+export function Cart({ cartItems, onAdd, onDecrement, onConfirmOrder, selectedTable }: CartProps) {
 
-	const [isLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 
 	const total = cartItems.reduce((acc, item) => {
 		return acc + (item.product.price * item.quantity);
 	}, 0);
+
+	async function handleConfirmOrdem() {
+		setIsLoading(true);
+		const payload = {
+			table: selectedTable,
+			products: cartItems.map((item) => ({
+				product: item.product._id,
+				quantity: item.quantity,
+			}))
+		};
+
+		await api.post('/orders', payload);
+		setIsModalVisible(true);
+	}
 
 	function handleOK() {
 		onConfirmOrder();
@@ -105,7 +121,7 @@ export function Cart({ cartItems, onAdd, onDecrement, onConfirmOrder }: CartProp
 
 				<Button
 					disabled={cartItems.length === 0}
-					onPress={() => setIsModalVisible(true)}
+					onPress={() => handleConfirmOrdem()}
 					loading={isLoading}
 				>
 					Confirmar pedido
